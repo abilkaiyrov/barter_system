@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ ad.title }}</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      padding: 2rem;
+    }
+    .card {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #333;
+    }
+    p {
+      margin: 0.5rem 0;
+    }
+    img {
+      max-width: 100%;
+      margin-top: 1rem;
+      border-radius: 8px;
+    }
+    a {
+      display: inline-block;
+      margin-top: 1rem;
+      text-decoration: none;
+      color: #007bff;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>{{ ad.title }}</h1>
+    <p><strong>Описание:</strong> {{ ad.description }}</p>
+    <p><strong>Категория:</strong> {{ ad.category }}</p>
+    <p><strong>Состояние:</strong> {{ ad.get_condition_display }}</p>
+    <p><strong>Дата публикации:</strong> {{ ad.created_at|date:'d.m.Y H:i' }}</p>
+    {% if ad.image_url %}
+      <img src="{{ ad.image_url }}" alt="Изображение">
+    {% endif %}
+    <br>
+    <a href="{% url 'ad_list' %}">← Назад к объявлениям</a>
+  </div>
+</body>
+</html>

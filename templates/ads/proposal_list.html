@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Мои предложения</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f9fc;
+      padding: 2rem;
+    }
+    h1 {
+      border-bottom: 2px solid #007bff;
+      margin-bottom: 1rem;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .status {
+      font-weight: bold;
+    }
+    .actions a {
+      color: #007bff;
+      text-decoration: none;
+      margin-top: 0.5rem;
+      display: inline-block;
+    }
+    .actions a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h1>Мои предложения обмена</h1>
+  <ul>
+    {% for proposal in proposals %}
+      <li>
+        <div>От: <strong>{{ proposal.ad_sender.title }}</strong></div>
+        <div>Кому: <strong>{{ proposal.ad_receiver.title }}</strong></div>
+        <div>Комментарий: {{ proposal.comment }}</div>
+        <div class="status">Статус: {{ proposal.get_status_display }}</div>
+        <div>Дата: {{ proposal.created_at }}</div>
+        {% if proposal.ad_receiver.user == request.user and proposal.status == 'pending' %}
+          <div class="actions">
+            <a href="{% url 'proposal_update' proposal.pk %}">Изменить статус</a>
+          </div>
+        {% endif %}
+      </li>
+      
+    {% empty %}
+      <li>Нет предложений.</li>
+    {% endfor %}
+  </ul>
+    <form method="get" style="margin-bottom: 2rem;">
+        <label>Статус:
+            <select name="status">
+            <option value="">Все</option>
+            <option value="pending">Ожидает</option>
+            <option value="accepted">Принята</option>
+            <option value="declined">Отклонена</option>
+            </select>
+        </label>
+        <label>ID отправителя:
+            <input type="number" name="sender_id">
+        </label>
+        <label>ID получателя:
+            <input type="number" name="receiver_id">
+        </label>
+        <button type="submit">Фильтровать</button>
+    </form>
+  <a href="{% url 'ad_list' %}">← Назад к объявлениям</a>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Удалить объявление</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff8f6;
+      padding: 2rem;
+      color: #333;
+    }
+    .container {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 {
+      color: #c0392b;
+      margin-bottom: 1rem;
+    }
+    p {
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
+    .buttons {
+      display: flex;
+      gap: 1rem;
+    }
+    button {
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      padding: 0.7rem 1.4rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #c0392b;
+    }
+    .cancel-btn {
+      background-color: #bdc3c7;
+      color: black;
+      text-decoration: none;
+      padding: 0.7rem 1.4rem;
+      border-radius: 5px;
+    }
+    .cancel-btn:hover {
+      background-color: #95a5a6;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Удалить объявление</h1>
+    <p>Вы уверены, что хотите удалить объявление <strong>"{{ ad.title }}"</strong>?</p>
+    <form method="post" class="buttons">
+      {% csrf_token %}
+      <button type="submit">Удалить</button>
+      <a href="{% url 'ad_list' %}" class="cancel-btn">Отмена</a>
+    </form>
+  </div>
+</body>
+</html>
